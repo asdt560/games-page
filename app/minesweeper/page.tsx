@@ -56,7 +56,7 @@ export default function MineSweeper() {
         Mines Left: {minesNumber}
       </div>
       <div 
-        className={boardSize ? `gap-px w-fit grid p-2` : "board"}
+        className={boardSize ? `w-fit grid bg-gray-600` : "board"}
         style={{
           gridTemplateColumns : boardSize ? `repeat(${boardSize}, 60px)` : undefined,
           gridTemplateRows : boardSize ? `repeat(${boardSize}, 60px)` : undefined,
@@ -66,7 +66,7 @@ export default function MineSweeper() {
           createBoard(boardSize, minesNumber).map((row, i) => {
                 return (row.map((cell, j) => {
                   return (
-                    <div className="h-12 w-12 bg-slate-500 border-white border-2" key={j}>
+                    <div className="justify-self-center self-center h-14 w-14 bg-slate-500 border-white border-2" key={j}>
                       {cell.element}
                     </div>
                   )
