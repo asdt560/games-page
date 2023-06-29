@@ -7,15 +7,8 @@ export default function MineSweeper() {
   const [minesNumber, setMinesNumber] = React.useState<number | null>(null);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(boardSize && minesNumber) {
-      resetBoard();
-    }
     setBoardSize(((e.target as HTMLFormElement).elements['0'] as HTMLFormElement).valueAsNumber)
     setMinesNumber(((e.target as HTMLFormElement).elements['1'] as HTMLFormElement).valueAsNumber)
-  }
-  const resetBoard = () => {
-    setBoardSize(null);
-    setMinesNumber(null);
   }
   return (
     <div className="game">
@@ -40,7 +33,6 @@ export default function MineSweeper() {
         <Board size={boardSize!} mines={minesNumber!} />
         : null
       }
-      <button type="button" onClick={() => resetBoard()}>Reset Game</button>
     </div>
   )
 }
