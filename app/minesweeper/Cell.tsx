@@ -23,7 +23,7 @@ export default function Cell(props : Cell) {
     }
     return value.neighbour;
   }
-  let className = "w-10 h-10 border-4 border-slate-400 " + (props.value.isRevealed ? "" : "bg-slate-600 ") + (props.value.isMine ? "bg-red" : "") + (props.value.isFlagged ? "bg-slate-400" : "");
+  let className = "w-10 h-10 border-4 text-center border-slate-400  " + (props.value.isRevealed ? "" : "bg-slate-600 ") + (props.value.isMine ? "bg-red" : "");
     return (
       <div
         onClick={() => props.onClick(props.value.x, props.value.y)}
