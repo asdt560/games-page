@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Cell from './Cell';
 import Data from './types';
-import { getFlags, getHidden, getMines, plantMines, traverseBoard, getNeighbours } from './logic';
+import { plantMines, traverseBoard, getNeighbours, getParameter } from './logic';
 
 interface BoardProps {
   size: number,
@@ -83,14 +83,14 @@ export default function Board(props: BoardProps) {
     if (updatedData[x][y].isEmpty) {
       updatedData = revealEmpty(x, y, updatedData);
     }
-    if (getHidden(updatedData).length === mines) {
+    if (getParameter(updatedData, 'hidden').length === mines) {
       win = true;
       revealBoard();
       alert("You Win");
     }
     setState({
       boardData: updatedData,
-      mineCount: mines - getFlags(updatedData).length,
+      mineCount: mines - getParameter(updatedData, 'flag').length,
       gameWon: win,
     });
   }
@@ -112,8 +112,8 @@ export default function Board(props: BoardProps) {
     }
 
     if (mines === 0) {
-      const mineArray = getMines(updatedData);
-      const FlagArray = getFlags(updatedData);
+      const mineArray = getParameter(updatedData, 'mine');
+      const FlagArray = getParameter(updatedData, 'flag');
       win = (JSON.stringify(mineArray) === JSON.stringify(FlagArray));
       if (win) {
         revealBoard();

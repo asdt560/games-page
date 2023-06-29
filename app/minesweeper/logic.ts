@@ -1,50 +1,34 @@
 import Data from "./types";
 
 // get mines
-export const getMines = (data : Data[][]) => {
+
+export const getParameter = (data : Data[][], param: string) => {
   let mineArray : Data[] = [];
 
   data.map(datarow => {
       datarow.map((dataitem) => {
-          if (dataitem.isMine) {
+        switch(param) {
+          case 'mine':
+            if (dataitem.isMine) {
               mineArray.push(dataitem);
-          }
+            }
+            break;
+          case 'flag':
+            if (dataitem.isFlagged) {
+              mineArray.push(dataitem);
+            }
+            break;
+          case 'hidden':
+            if (!dataitem.isRevealed) {
+              mineArray.push(dataitem);
+            }
+            break;
+        }
       });
   });
 
   return mineArray;
 }
-
-// get Flags
-export const getFlags = (data : Data[][]) => {
-  let mineArray : Data[] = [];
-
-  data.map(datarow => {
-      datarow.map((dataitem) => {
-          if (dataitem.isFlagged) {
-              mineArray.push(dataitem);
-          }
-      });
-  });
-
-  return mineArray;
-}
-
-// get Hidden cells
-export const getHidden =(data: Data[][]) => {
-  let mineArray : Data[] = [];
-
-  data.map(datarow => {
-      datarow.map((dataitem) => {
-          if (!dataitem.isRevealed) {
-              mineArray.push(dataitem);
-          }
-      });
-  });
-
-  return mineArray;
-}
-
 // get random number given a dimension
 export const getRandomNumber = (dimension : number) => {
   return Math.floor((Math.random() * 1000) + 1) % dimension;
