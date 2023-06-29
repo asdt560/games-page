@@ -2,7 +2,7 @@ import Data from "./types";
 
 // get mines
 
-export const getParameter = (data : Data[][], param: string) => {
+export const getParameter = (data : Data[][], param: 'mine' | 'flag' | 'hidden') => {
   let mineArray : Data[] = [];
 
   data.map(datarow => {
@@ -26,7 +26,6 @@ export const getParameter = (data : Data[][], param: string) => {
         }
       });
   });
-
   return mineArray;
 }
 // get random number given a dimension
