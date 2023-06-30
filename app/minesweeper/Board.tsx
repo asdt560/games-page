@@ -63,9 +63,9 @@ export default function Board(props: BoardProps) {
   }
   const [state, setState] = useState({
     boardData: initBoardData(size, mines),
-    gameWon: false,
     mineCount: mines,
   });
+  const [gameMessage, setGameMessage] = useState("");
   // Handle User Events
   const handleCellClick = (x: number, y: number) => {
     let win = false;
@@ -73,8 +73,8 @@ export default function Board(props: BoardProps) {
     if (state.boardData[x][y].isRevealed) return null;
     // check if mine. game over if true
     if (state.boardData[x][y].isMine) {
+      setGameMessage("You Lost!")
       revealBoard();
-      alert("game over");
     }
     let updatedData = state.boardData;
     updatedData[x][y].isFlagged = false;
@@ -85,13 +85,13 @@ export default function Board(props: BoardProps) {
     }
     if (getParameter(updatedData, 'hidden').length === mines) {
       win = true;
+      setGameMessage("You Win!")
       revealBoard();
-      alert("You Win");
     }
     setState({
+      ...state,
       boardData: updatedData,
       mineCount: mines - getParameter(updatedData, 'flag').length,
-      gameWon: win,
     });
   }
   const _handleContextMenu = (e: React.MouseEvent, x: number, y: number) => {
@@ -116,15 +116,15 @@ export default function Board(props: BoardProps) {
       const FlagArray = getParameter(updatedData, 'flag');
       win = (JSON.stringify(mineArray) === JSON.stringify(FlagArray));
       if (win) {
+        setGameMessage("You Win!")
         revealBoard();
-        alert("You Win");
       }
     }
 
     setState({
+      ...state,
       boardData: updatedData,
       mineCount: mines,
-      gameWon: win,
     });
   }
   // Render Cells
@@ -148,19 +148,36 @@ export default function Board(props: BoardProps) {
   useEffect(() => {
     setState({
       boardData: initBoardData(size, mines),
-      gameWon: false,
       mineCount: mines,
     })
+    setGameMessage("");
   }, [size, mines])
-
+  const textClass = "text-xl w-1/4 font-bold text-slate-800 text-center"
   return (
-    <div className="content-center justify-center flex flex-col">
-      <div className="self-center">
-        <span className="info">mines: {state.mineCount}</span><br />
-        <span className="info">{state.gameWon ? "You Win" : ""}</span>
+    <div className="content-center justify-center items-center flex flex-col">
+      <div className="flex w-full justify-center">
+        <span className={textClass + 'justify-self-start'}>Mines: {state.mineCount}</span><br />
+        <button
+        onClick={() => {
+          setState({
+            mineCount: mines,
+            boardData: initBoardData(size, mines),
+          })
+          setGameMessage("")
+        }}
+        className="w-1/4 mx-12 bg-slate-600 text-white border-2 border-slate-200"
+      >
+        Reset
+      </button>
+        {
+          gameMessage.length > 0 ? 
+          <span className={textClass}>{gameMessage}</span> 
+          : <span className={textClass}></span>
+        }
+        
       </div>
       <div
-        className="self-center bg-slate-200"
+        className="self-center bg-slate-400 p-2 gap-2"
         style={{
           display: 'grid',
           gridTemplateColumns: `repeat(${size}, 1fr)`,
@@ -172,11 +189,7 @@ export default function Board(props: BoardProps) {
         }
 
       </div>
-      <button onClick={() => setState({
-        mineCount: mines,
-        boardData: initBoardData(size, mines),
-        gameWon: false,
-      })}>Reset</button>
+      
     </div>
   );
 }
