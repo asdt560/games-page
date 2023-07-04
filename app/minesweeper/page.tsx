@@ -1,10 +1,10 @@
 'use client';
-import React from "react";
+import { useState } from "react";
 import Board from "./Board";
 
 export default function MineSweeper() {
-  const [boardSize, setBoardSize] = React.useState<number | null>(null);
-  const [minesNumber, setMinesNumber] = React.useState<number | null>(null);
+  const [boardSize, setBoardSize] = useState<number | null>(null);
+  const [minesNumber, setMinesNumber] = useState<number | null>(null);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setBoardSize(((e.target as HTMLFormElement).elements['0'] as HTMLFormElement).valueAsNumber)
