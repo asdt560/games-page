@@ -11,13 +11,13 @@ import {
   UP,
 } from "./snakeActions";
 
-interface IGlobalState {
+export interface snakeState {
   snake: ISnakeCoord[] | [];
   disallowedDirection: string;
   score: number;
 }
 
-const globalState: IGlobalState = {
+const globalState: snakeState = {
   snake: [
     { x: 580, y: 300 },
     { x: 560, y: 300 },
@@ -28,7 +28,8 @@ const globalState: IGlobalState = {
   disallowedDirection: "",
   score: 0,
 };
-const gameReducer = (state = globalState, action: any) => {
+
+const snakeReducer = (state = globalState, action: any) => {
   switch (action.type) {
     case RIGHT:
     case LEFT:
@@ -89,4 +90,4 @@ const gameReducer = (state = globalState, action: any) => {
   }
 };
 
-export default gameReducer;
+export default snakeReducer;
