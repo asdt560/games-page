@@ -31,7 +31,6 @@ export interface ICanvasBoard {
 const CanvasBoard = ({ height, width }: ICanvasBoard) => {
   const dispatch = useDispatch();
   const snake1 = useSelector((state: IGlobalState) => state.snakeReducer.snake);
-  console.log(useSelector((state: IGlobalState) => state))
   const disallowedDirection = useSelector(
     (state: IGlobalState) => state.snakeReducer.disallowedDirection
   );
@@ -112,17 +111,16 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     ); //Draws object randomly
     window.addEventListener("keypress", handleKeyEvents);
   }, [context, dispatch, handleKeyEvents, height, snake1, width]);
-
   useEffect(() => {
     //Generate new object
     if (isConsumed) {
       const posi = generateRandomPosition(width - 20, height - 20);
-      setPos(posi);
+      
       setIsConsumed(false);
 
+      setPos(posi);
       //Increase snake size when object is consumed successfully
       dispatch(increaseSnake());
-
       //Increment the score
       dispatch(scoreUpdates(INCREMENT_SCORE));
     }
