@@ -5,7 +5,7 @@ const Snake = () => {
     <div className="flex flex-col items-center">
       <h1>Snake</h1>
       <ScoreCard />
-      <CanvasBoard height={600} width={1000} />
+      <CanvasBoard height={500} width={1000} />
     </div>
   )
 }
