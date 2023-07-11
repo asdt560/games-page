@@ -125,7 +125,6 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
       //Increment the score
       dispatch(scoreUpdates(INCREMENT_SCORE));
     }
-    console.log(isConsumed, pos)
   }, [isConsumed, pos, height, width, dispatch]);
 
   useEffect(() => {
@@ -136,7 +135,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     drawObject(context, [pos], "#676FA3"); //Draws object randomly
 
     //When the object is consumed
-    if (snake1[0].x === pos?.x && snake1[0].y === pos?.y) {
+    if (snake1[0].x === pos?.x && snake1[0].y === pos?.y && !isConsumed) {
       setIsConsumed(true);
     }
 
@@ -151,7 +150,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
       dispatch(stopGame());
       window.removeEventListener("keypress", handleKeyEvents);
     } else setGameEnded(false);
-  }, [isConsumed, context, pos, snake1, height, width, dispatch, handleKeyEvents]);
+  }, [context, pos, snake1, height, width, dispatch, handleKeyEvents]);
 
   useEffect(() => {
     window.addEventListener("keypress", handleKeyEvents);
