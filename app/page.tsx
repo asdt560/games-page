@@ -6,6 +6,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1>Games</h1>
       <Link href="/minesweeper">Minesweeper</Link>
+      <Link href="/snake">Snake</Link>
     </main>
   )
 }
