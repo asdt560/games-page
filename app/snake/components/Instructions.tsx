@@ -7,24 +7,10 @@ const Instruction = ({ resetBoard }: IInstructionProps) => (
     <h3>
       How to Play
     </h3>
-    <h3>
-    NOTE: Start the game by pressing d
-    </h3>
     <div>
-      <div>
         <span>
-          w Move Up
+          Use W to Turn Up, A to Turn Left, S to Turn Down and D to Turn Right
         </span>
-        <span>
-          a Move Left
-        </span>
-        <span>
-          s Move Down
-        </span>
-        <span>
-          d Move Right
-        </span>
-      </div>
       <div>
         <button onClick={() => resetBoard()}>Reset game</button>
       </div>
