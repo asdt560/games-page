@@ -64,7 +64,10 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
   );
 
   const handleKeyEvents = useCallback(
-    (event: KeyboardEvent) => {
+    (event: React.KeyboardEvent<HTMLCanvasElement>) => {
+      if(gameEnded) {
+        return;
+      }
       if (disallowedDirection) {
         switch (event.key) {
           case "w":
@@ -102,11 +105,10 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
           }
       }
     },
-    [disallowedDirection, moveSnake]
+    [disallowedDirection, gameEnded, moveSnake]
   );
 
   const resetBoard = useCallback(() => {
-    window.removeEventListener("keydown", handleKeyEvents);
     dispatch(resetGame());
     dispatch(scoreUpdates(RESET_SCORE));
     clearBoard(context);
@@ -115,9 +117,9 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
       context,
       [generateRandomPosition(width - 20, height - 20)],
       "#676FA3"
-    ); //Draws object randomly
-    window.addEventListener("keydown", handleKeyEvents);
-  }, [context, dispatch, handleKeyEvents, height, snake1, width]);
+    );
+    canvasRef.current?.focus();
+  }, [context, dispatch, height, snake1, width]);
 
   useEffect(() => {
     //Generate new object
@@ -155,16 +157,8 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     ) {
       setGameEnded(true);
       dispatch(stopGame());
-      window.removeEventListener("keydown", handleKeyEvents);
     } else setGameEnded(false);
-  }, [context, pos, snake1, height, width, dispatch, handleKeyEvents]);
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyEvents);
-    return () => {
-      window.removeEventListener("keydown", handleKeyEvents);
-    };
-  }, [disallowedDirection, handleKeyEvents]);
+  }, [context, pos, snake1, height, width, dispatch, handleKeyEvents, isConsumed]);
 
   return (
     <>
@@ -176,10 +170,13 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
         )
       }
       <canvas
+        autoFocus
         ref={canvasRef}
-        className="border-2 border-black"
+        className="border-2 outline-green-500 outline-dashed border-green-600 bg-green-100"
         width={width}
         height={height}
+        tabIndex={0}
+        onKeyDown={(e) => handleKeyEvents(e)}
       />
       <Instruction resetBoard={resetBoard} />
     </>
