@@ -111,6 +111,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     ); //Draws object randomly
     window.addEventListener("keypress", handleKeyEvents);
   }, [context, dispatch, handleKeyEvents, height, snake1, width]);
+
   useEffect(() => {
     //Generate new object
     if (isConsumed) {
@@ -124,6 +125,7 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
       //Increment the score
       dispatch(scoreUpdates(INCREMENT_SCORE));
     }
+    console.log(isConsumed, pos)
   }, [isConsumed, pos, height, width, dispatch]);
 
   useEffect(() => {
@@ -141,15 +143,15 @@ const CanvasBoard = ({ height, width }: ICanvasBoard) => {
     if (
       hasSnakeCollided(snake1, snake1[0]) ||
       snake1[0].x >= width ||
-      snake1[0].x <= 0 ||
-      snake1[0].y <= 0 ||
+      snake1[0].x <= -20 ||
+      snake1[0].y <= -20 ||
       snake1[0].y >= height
     ) {
       setGameEnded(true);
       dispatch(stopGame());
       window.removeEventListener("keypress", handleKeyEvents);
     } else setGameEnded(false);
-  }, [context, pos, snake1, height, width, dispatch, handleKeyEvents]);
+  }, [isConsumed, context, pos, snake1, height, width, dispatch, handleKeyEvents]);
 
   useEffect(() => {
     window.addEventListener("keypress", handleKeyEvents);
