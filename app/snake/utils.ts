@@ -20,10 +20,16 @@ export const drawObject = (
       context.fillStyle = fillColor;
       context.strokeStyle = strokeStyle;
       if(i === 0 && objectBody.length > 1) {
+        console.log('form the head')
         context.fillStyle = "#71f24e";
-      } 
-      context?.fillRect(object.x, object.y, 20, 20);
-      context?.strokeRect(object.x, object.y, 20, 20);
+        context.beginPath();
+        context.arc(object.x + 10, object.y + 10, 12, 0, 2 * Math.PI);
+        context.stroke();
+        context.fill();
+      } else {
+        context?.fillRect(object.x, object.y, 20, 20);
+        context?.strokeRect(object.x, object.y, 20, 20);
+      }
     });
   }
 };
