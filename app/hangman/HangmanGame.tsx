@@ -6,7 +6,7 @@ const HangmanGame = () => {
     "A","B","C","D","E","F","G","H","I","J","K","L","M",
     "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
   ]
-  const wordArr = [["W","O","R","D"]]
+  const wordArr = [["M","U","L","T","I","P","L","E"], ["T","E","S","T"], ["H","A","N","G","M","A","N"]]
   const [word, setWord] = useState<string[] | null>(null)
   const [wrongGuesses, setWrongGuesses] = useState<string[]>([])
   const [correctGuesses, setCorrectGuesses] = useState<string[]>([])
@@ -43,72 +43,73 @@ const HangmanGame = () => {
     })
   }
 
-  const letterClass = "text-2xl text-blue-500 border-2 border-blue-500 rounded-md m-2 p-4"
+  const winCheck = (correct : string[], word : string[]) => {
+    let won = true
+    word.forEach((letter) => {
+      if(!correct.includes(letter)) {
+        won = false
+      };
+    })
+    setGameWon(won)
+  }
+
+  const letterClass = "text-2xl text-blue-500 border-2 border-blue-500 rounded-md m-2 px-2 py-1"
   const wrongClass = letterClass + " disabled:border-red-500 disabled:text-red-500 disabled:cursor-not-allowed"
   const correctClass = letterClass + " disabled:border-green-500 disabled:text-green-500 disabled:cursor-not-allowed"
   useEffect(() => {
     if(!word) return
     if(wrongGuesses.length >= 6) setGameOver(true)
-    if(correctGuesses.length === word.length) setGameWon(true)
+    winCheck(correctGuesses, word)
 
   }, [correctGuesses, wrongGuesses, word])
+
   
   return (
     <div className="flex flex-col items-center">
-      {
-        gameWon && <div>You Won!</div>
-      }
-      <div>{wrongGuesses.length > 0 ? wrongGuesses.length : ""}</div>
-      <div>
-        {/*
-        <div className="w-24 h-24 absolute left-16 border-4 border-black rounded-full"></div>
-        <div
-          className="w-2 h-40 absolute border-4 border-black rounded-full"
-          style={
-            {
-              left: "6.75rem",
-              top: "7.4rem",
-            }
-          }
+      <div className="h-80">
+        <div className="h-80 absolute border-4 border-black rounded-full left-32"></div>
+        <div className="w-72 absolute border-4 border-black rounded-full left-32"></div>
+        <div className="h-16 absolute border-4 border-black left-[25.75rem] rounded-full"></div>
+        <div 
+          className={
+            "w-16 h-16 absolute top-[5.4rem] left-96 border-4 rounded-full"
+            + (wrongGuesses.length >= 6 ? " border-black" : " border-slate-300")}
         ></div>
         <div
-          className="w-2 h-36 absolute rotate-45 border-4 border-black rounded-full"
-          style={
-            {
-              left: "3.4rem",
-              top: "7.5rem",
-            }
-          }
+          className={
+            "h-24 absolute border-4 top-[9.2rem] left-[25.75rem] rounded-full"
+          + (wrongGuesses.length >= 5 ? " border-black" : " border-slate-300")}
         ></div>
         <div
-          className="w-2 h-36 absolute border-4 border-black rounded-full rotate-[-45deg]"
-          style={
-            {
-              left: "10rem",
-              top: "7.5rem",
-            }
-          }
+          className={
+            "h-20 absolute rotate-45 top-[9.2rem] left-[23.8rem] border-4 rounded-full" 
+            + (wrongGuesses.length >= 4 ? " border-black" : " border-slate-300")}
         ></div>
         <div
-          className="w-2 h-40 absolute border-4 border-black rounded-full rotate-[20deg]"
-          style={
-            {
-              left: "5rem",
-              top: "16.8rem",
-            }
-          }
+          className={
+            "h-20 absolute top-[9.2rem] left-[27.75rem] border-4 rounded-full rotate-[-45deg]"
+            + (wrongGuesses.length >= 3 ? " border-black" : " border-slate-300")}
         ></div>
         <div
-          className="w-2 h-40 absolute border-4 border-black rounded-full rotate-[-20deg]"
-          style={
-            {
-              left: "8.5rem",
-              top: "16.8rem",
-            }
-          }
+          className={
+            "h-20 top-[14.5rem] left-[24.8rem] absolute border-4 rounded-full rotate-[20deg]"
+            + (wrongGuesses.length >= 2 ? " border-black" : " border-slate-300")}
         ></div>
-        */}
+        <div
+          className={
+            "h-20 absolute top-[14.5rem] left-[26.6rem] border-4 rounded-full rotate-[-20deg]"
+            + (wrongGuesses.length >= 1 ? " border-black" : " border-slate-300")}
+        ></div>
       </div>
+      <div className="h-6">
+      {
+        gameWon && "You Won!"
+      }
+      {
+        gameOver && "You Lost!"
+      }
+      </div>
+      <div className="flex flex-col items-center">
       <div className="flex justify-around w-1/2">
         {
           word?.map((letter, index) => {
@@ -131,6 +132,7 @@ const HangmanGame = () => {
         }
       </div>
       <button onClick={() => startGame()}>Start</button>
+      </div>
     </div>
 
   )
