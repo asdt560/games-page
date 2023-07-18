@@ -68,11 +68,11 @@ const HangmanGame = () => {
 
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col">
       <div className="h-80">
         <div className="h-80 absolute border-4 border-black rounded-full left-32"></div>
         <div className="w-72 absolute border-4 border-black rounded-full left-32"></div>
-        <div className="h-16 absolute border-4 border-black left-[25.75rem] rounded-full"></div>
+        <div className="h-14 absolute border-4 border-black left-[25.75rem] rounded-full"></div>
         <div
           className={
             "w-16 h-16 absolute top-[5.4rem] left-96 border-4 rounded-full"
