@@ -7,6 +7,7 @@ export default function Home() {
       <h1>Games</h1>
       <Link href="/minesweeper">Minesweeper</Link>
       <Link href="/snake">Snake</Link>
+      <Link href="/hangman">Hangman</Link>
     </main>
   )
 }
